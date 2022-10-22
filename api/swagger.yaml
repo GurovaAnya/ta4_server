@@ -1,0 +1,185 @@
+swagger: "2.0"
+info:
+  description: ""
+  version: "1.0.0"
+  title: "Swagger T4A"
+host: "localhost"
+tags:
+  - name: "project"
+    description: "Partner info"
+  - name: "achievement"
+  - name: "event"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /project:
+    post:
+      tags:
+        - "project"
+      summary: "Add a new project of a partner"
+      operationId: "addProject"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Project"
+          required: true
+          schema:
+            $ref: '#/definitions/Project'
+      responses:
+        201:
+          description: "Project created"
+          schema:
+            $ref: '#/definitions/ProjectResponse'
+        405:
+          description: "Invalid input"
+      security:
+        - api_key: []
+    get:
+      tags:
+        - "project"
+      summary: "Get current project"
+      description: "Project id is calculated by the token"
+      operationId: "getProject"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Project"
+        400:
+          description: "Invalid status value"
+  /achievement:
+    post:
+      tags:
+        - "achievement"
+      summary: "Save new achievement"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Achievement"
+          required: true
+          schema:
+            $ref: '#/definitions/Achievement'
+      responses:
+        201:
+          description: "Achievement created"
+          schema:
+            $ref: '#/definitions/Achievement'
+
+
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+
+definitions:
+  Project:
+    type: "object"
+    required:
+      - "name"
+      - "webhook_url"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+        example: "GTA 5"
+      webhook_url:
+        type: "string"
+        example: "example.com"
+  ProjectResponse:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      api_key:
+        type: "string"
+        example: "abcdef123"
+  Achievement:
+    type: "object"
+    required:
+      - "name"
+    properties:
+      id:
+        type: "string"
+        example: "f74687fa-2df7-450e-8c31-993695dcebf7"
+      name:
+        type: "string"
+        example: "GTA 5"
+      webhook_url:
+        type: "string"
+        example: "example.com"
+  Event:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "f74687fa-2df7-450e-8c31-993695dcebf7"
+      sku:
+        type: "string"
+        example: "enemy_kill"
+      description:
+        type: "string"
+        example: "occurrs if a player killed an enemy"
+  EventCount:
+    type: "object"
+    properties:
+      event_id:
+        type: "string"
+        example: "f74687fa-2df7-450e-8c31-993695dcebf7"
+      count:
+        type: "integer"
+        format: "int64"
+
+  Trigger:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "5e6890cc-c3a1-4c26-b269-b55e715c09b8"
+      sku:
+        type: "string"
+        example: "enemy_kill"
+      achievement_id:
+        type: "string"
+        example: "3a24bc5c-4c9d-11ed-bdc3-0242ac120002"
+      events:
+        type: "array"
+        items:
+          $ref: '#/definitions/EventCount'
+  Player:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "5e6890cc-c3a1-4c26-b269-b55e715c09b8"
+      wallet_address:
+        type: "string"
+        example: "ba4TrH8sNRzQfFhJH8mR"
+
+  WebhookEvent:
+    type: "object"
+    properties:
+      event_id:
+        type: "string"
+        example: "5e6890cc-c3a1-4c26-b269-b55e715c09b8"
+      player_id:
+        type: "string"
+        example: "5e6890cc-c3a1-4c26-b269-b55e715c09b8"
+
+  WebhookTrigger:
+    type: "object"
+    properties:
+      event_id:
+        type: "string"
+        example: "5e6890cc-c3a1-4c26-b269-b55e715c09b8"
+      player_id:
+        type: "string"
+        example: "5e6890cc-c3a1-4c26-b269-b55e715c09b8"
