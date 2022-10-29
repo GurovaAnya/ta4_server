@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet author="gurova.a" id="123">
+        <createTable tableName="project">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_project_id"/>
+            </column>
+            <column name="webhook_url" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="api_key" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
