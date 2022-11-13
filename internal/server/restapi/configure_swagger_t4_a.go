@@ -4,15 +4,14 @@ package restapi
 
 import (
 	"crypto/tls"
-	"net/http"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
-
+	"net/http"
 	"ta4/mod/internal/server/restapi/operations"
 	"ta4/mod/internal/server/restapi/operations/achievement"
 	"ta4/mod/internal/server/restapi/operations/project"
+	"ta4/mod/services/handlers"
 )
 
 //go:generate swagger generate server --target ../../server --name SwaggerT4A --spec ../../../api/swagger.yaml --principal interface{} --exclude-main
@@ -34,6 +33,9 @@ func configureAPI(api *operations.SwaggerT4AAPI) http.Handler {
 	api.UseSwaggerUI()
 	// To continue using redoc as your UI, uncomment the following line
 	// api.UseRedoc()
+
+	api.ProjectAddProjectHandler = handlers.AddProjectHandlerImpl()
+	api.ProjectGetProjectHandler = handlers.GetProjectHandlerImpl()
 
 	api.JSONConsumer = runtime.JSONConsumer()
 

@@ -42,7 +42,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Achievement"
+              "$ref": "#/definitions/AchievementRequest"
             }
           }
         ],
@@ -103,7 +103,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Project"
+              "$ref": "#/definitions/ProjectRequest"
             }
           }
         ],
@@ -130,8 +130,25 @@ func init() {
       "properties": {
         "id": {
           "type": "string",
+          "format": "uuid",
           "example": "f74687fa-2df7-450e-8c31-993695dcebf7"
         },
+        "name": {
+          "type": "string",
+          "example": "GTA 5"
+        },
+        "webhook_url": {
+          "type": "string",
+          "example": "example.com"
+        }
+      }
+    },
+    "AchievementRequest": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
         "name": {
           "type": "string",
           "example": "GTA 5"
@@ -193,8 +210,26 @@ func init() {
       ],
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "format": "uuid"
         },
+        "name": {
+          "type": "string",
+          "example": "GTA 5"
+        },
+        "webhook_url": {
+          "type": "string",
+          "example": "example.com"
+        }
+      }
+    },
+    "ProjectRequest": {
+      "type": "object",
+      "required": [
+        "name",
+        "webhook_url"
+      ],
+      "properties": {
         "name": {
           "type": "string",
           "example": "GTA 5"
@@ -213,7 +248,8 @@ func init() {
           "example": "abcdef123"
         },
         "id": {
-          "type": "string"
+          "type": "string",
+          "format": "uuid"
         }
       }
     },
@@ -312,7 +348,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Achievement"
+              "$ref": "#/definitions/AchievementRequest"
             }
           }
         ],
@@ -373,7 +409,7 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Project"
+              "$ref": "#/definitions/ProjectRequest"
             }
           }
         ],
@@ -400,8 +436,25 @@ func init() {
       "properties": {
         "id": {
           "type": "string",
+          "format": "uuid",
           "example": "f74687fa-2df7-450e-8c31-993695dcebf7"
         },
+        "name": {
+          "type": "string",
+          "example": "GTA 5"
+        },
+        "webhook_url": {
+          "type": "string",
+          "example": "example.com"
+        }
+      }
+    },
+    "AchievementRequest": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
         "name": {
           "type": "string",
           "example": "GTA 5"
@@ -463,8 +516,26 @@ func init() {
       ],
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "format": "uuid"
         },
+        "name": {
+          "type": "string",
+          "example": "GTA 5"
+        },
+        "webhook_url": {
+          "type": "string",
+          "example": "example.com"
+        }
+      }
+    },
+    "ProjectRequest": {
+      "type": "object",
+      "required": [
+        "name",
+        "webhook_url"
+      ],
+      "properties": {
         "name": {
           "type": "string",
           "example": "GTA 5"
@@ -483,7 +554,8 @@ func init() {
           "example": "abcdef123"
         },
         "id": {
-          "type": "string"
+          "type": "string",
+          "format": "uuid"
         }
       }
     },

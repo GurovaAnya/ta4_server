@@ -14,14 +14,10 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// Project project
+// ProjectRequest project request
 //
-// swagger:model Project
-type Project struct {
-
-	// id
-	// Format: uuid
-	ID strfmt.UUID `json:"id,omitempty"`
+// swagger:model ProjectRequest
+type ProjectRequest struct {
 
 	// name
 	// Example: GTA 5
@@ -34,13 +30,9 @@ type Project struct {
 	WebhookURL *string `json:"webhook_url"`
 }
 
-// Validate validates this project
-func (m *Project) Validate(formats strfmt.Registry) error {
+// Validate validates this project request
+func (m *ProjectRequest) Validate(formats strfmt.Registry) error {
 	var res []error
-
-	if err := m.validateID(formats); err != nil {
-		res = append(res, err)
-	}
 
 	if err := m.validateName(formats); err != nil {
 		res = append(res, err)
@@ -56,19 +48,7 @@ func (m *Project) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Project) validateID(formats strfmt.Registry) error {
-	if swag.IsZero(m.ID) { // not required
-		return nil
-	}
-
-	if err := validate.FormatOf("id", "body", "uuid", m.ID.String(), formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *Project) validateName(formats strfmt.Registry) error {
+func (m *ProjectRequest) validateName(formats strfmt.Registry) error {
 
 	if err := validate.Required("name", "body", m.Name); err != nil {
 		return err
@@ -77,7 +57,7 @@ func (m *Project) validateName(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Project) validateWebhookURL(formats strfmt.Registry) error {
+func (m *ProjectRequest) validateWebhookURL(formats strfmt.Registry) error {
 
 	if err := validate.Required("webhook_url", "body", m.WebhookURL); err != nil {
 		return err
@@ -86,13 +66,13 @@ func (m *Project) validateWebhookURL(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this project based on context it is used
-func (m *Project) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this project request based on context it is used
+func (m *ProjectRequest) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *Project) MarshalBinary() ([]byte, error) {
+func (m *ProjectRequest) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -100,8 +80,8 @@ func (m *Project) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *Project) UnmarshalBinary(b []byte) error {
-	var res Project
+func (m *ProjectRequest) UnmarshalBinary(b []byte) error {
+	var res ProjectRequest
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

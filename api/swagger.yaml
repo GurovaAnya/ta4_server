@@ -29,7 +29,7 @@ paths:
           description: "Project"
           required: true
           schema:
-            $ref: '#/definitions/Project'
+            $ref: '#/definitions/ProjectRequest'
       responses:
         201:
           description: "Project created"
@@ -54,6 +54,9 @@ paths:
             $ref: "#/definitions/Project"
         400:
           description: "Invalid status value"
+#      security:
+#        - api_key: []
+
   /achievement:
     post:
       tags:
@@ -65,7 +68,7 @@ paths:
           description: "Achievement"
           required: true
           schema:
-            $ref: '#/definitions/Achievement'
+            $ref: '#/definitions/AchievementRequest'
       responses:
         201:
           description: "Achievement created"
@@ -88,17 +91,33 @@ definitions:
     properties:
       id:
         type: "string"
+        format: "uuid"
       name:
         type: "string"
         example: "GTA 5"
       webhook_url:
         type: "string"
         example: "example.com"
+
+  ProjectRequest:
+    type: "object"
+    required:
+      - "name"
+      - "webhook_url"
+    properties:
+      name:
+        type: "string"
+        example: "GTA 5"
+      webhook_url:
+        type: "string"
+        example: "example.com"
+
   ProjectResponse:
     type: "object"
     properties:
       id:
         type: "string"
+        format: "uuid"
       api_key:
         type: "string"
         example: "abcdef123"
@@ -109,7 +128,20 @@ definitions:
     properties:
       id:
         type: "string"
+        format: "uuid"
         example: "f74687fa-2df7-450e-8c31-993695dcebf7"
+      name:
+        type: "string"
+        example: "GTA 5"
+      webhook_url:
+        type: "string"
+        example: "example.com"
+
+  AchievementRequest:
+    type: "object"
+    required:
+      - "name"
+    properties:
       name:
         type: "string"
         example: "GTA 5"

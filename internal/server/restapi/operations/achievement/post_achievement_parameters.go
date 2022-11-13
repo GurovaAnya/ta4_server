@@ -38,7 +38,7 @@ type PostAchievementParams struct {
 	  Required: true
 	  In: body
 	*/
-	Body *models.Achievement
+	Body *models.AchievementRequest
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -52,7 +52,7 @@ func (o *PostAchievementParams) BindRequest(r *http.Request, route *middleware.M
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body models.Achievement
+		var body models.AchievementRequest
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
 				res = append(res, errors.Required("body", "body", ""))

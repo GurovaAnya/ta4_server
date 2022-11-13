@@ -14,15 +14,10 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// Achievement achievement
+// AchievementRequest achievement request
 //
-// swagger:model Achievement
-type Achievement struct {
-
-	// id
-	// Example: f74687fa-2df7-450e-8c31-993695dcebf7
-	// Format: uuid
-	ID strfmt.UUID `json:"id,omitempty"`
+// swagger:model AchievementRequest
+type AchievementRequest struct {
 
 	// name
 	// Example: GTA 5
@@ -34,13 +29,9 @@ type Achievement struct {
 	WebhookURL string `json:"webhook_url,omitempty"`
 }
 
-// Validate validates this achievement
-func (m *Achievement) Validate(formats strfmt.Registry) error {
+// Validate validates this achievement request
+func (m *AchievementRequest) Validate(formats strfmt.Registry) error {
 	var res []error
-
-	if err := m.validateID(formats); err != nil {
-		res = append(res, err)
-	}
 
 	if err := m.validateName(formats); err != nil {
 		res = append(res, err)
@@ -52,19 +43,7 @@ func (m *Achievement) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Achievement) validateID(formats strfmt.Registry) error {
-	if swag.IsZero(m.ID) { // not required
-		return nil
-	}
-
-	if err := validate.FormatOf("id", "body", "uuid", m.ID.String(), formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *Achievement) validateName(formats strfmt.Registry) error {
+func (m *AchievementRequest) validateName(formats strfmt.Registry) error {
 
 	if err := validate.Required("name", "body", m.Name); err != nil {
 		return err
@@ -73,13 +52,13 @@ func (m *Achievement) validateName(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this achievement based on context it is used
-func (m *Achievement) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validates this achievement request based on context it is used
+func (m *AchievementRequest) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *Achievement) MarshalBinary() ([]byte, error) {
+func (m *AchievementRequest) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -87,8 +66,8 @@ func (m *Achievement) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *Achievement) UnmarshalBinary(b []byte) error {
-	var res Achievement
+func (m *AchievementRequest) UnmarshalBinary(b []byte) error {
+	var res AchievementRequest
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

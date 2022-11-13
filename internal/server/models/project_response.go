@@ -7,10 +7,11 @@ package models
 
 import (
 	"context"
-	"github.com/google/uuid"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // ProjectResponse project response
@@ -23,11 +24,33 @@ type ProjectResponse struct {
 	APIKey string `json:"api_key,omitempty"`
 
 	// id
-	ID uuid.UUID `json:"id,omitempty"`
+	// Format: uuid
+	ID strfmt.UUID `json:"id,omitempty"`
 }
 
 // Validate validates this project response
 func (m *ProjectResponse) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ProjectResponse) validateID(formats strfmt.Registry) error {
+	if swag.IsZero(m.ID) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("id", "body", "uuid", m.ID.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 
