@@ -13,6 +13,7 @@ import (
 	"ta4/mod/services/handlers/achievement"
 	"ta4/mod/services/handlers/event"
 	projectImpl "ta4/mod/services/handlers/project"
+	"ta4/mod/services/handlers/trigger"
 )
 
 //go:generate swagger generate server --target ../../server --name SwaggerT4A --spec ../../../api/swagger.yaml --principal interface{} --exclude-main
@@ -39,6 +40,7 @@ func configureAPI(api *operations.SwaggerT4AAPI) http.Handler {
 	api.ProjectGetProjectHandler = projectImpl.GetProjectHandlerImpl()
 	api.AchievementPostAchievementHandler = achievement.AddAchievementHandlerImpl()
 	api.EventPostEventHandler = event.AddEventHandlerImpl()
+	api.TriggerPostTriggerHandler = trigger.AddTriggerHandlerImpl()
 
 	api.JSONConsumer = runtime.JSONConsumer()
 

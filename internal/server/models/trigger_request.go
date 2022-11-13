@@ -25,6 +25,10 @@ type TriggerRequest struct {
 	// Format: uuid
 	AchievementID strfmt.UUID `json:"achievement_id,omitempty"`
 
+	// description
+	// Example: kill enemy
+	Description string `json:"description,omitempty"`
+
 	// events
 	Events []*EventCount `json:"events"`
 

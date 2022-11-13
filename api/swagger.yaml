@@ -267,6 +267,9 @@ definitions:
         format: "uuid"
         type: "string"
         example: "3a24bc5c-4c9d-11ed-bdc3-0242ac120002"
+      description:
+        type: "string"
+        example: "kill enemy"
       events:
         type: "array"
         items:

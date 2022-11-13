@@ -10,5 +10,5 @@ type EventModel struct {
 }
 
 func (EventModel) TableName() string {
-	return "Event"
+	return "event"
 }
