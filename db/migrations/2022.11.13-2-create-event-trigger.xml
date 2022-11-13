@@ -11,7 +11,6 @@
             <column name="sku" type="VARCHAR(255)"/>
             <column name="description" type="VARCHAR(255)"/>
             <column name="project_id" type="uuid"/>
-            <column name="is_used" type="boolean"/>
         </createTable>
 
         <createTable tableName="trigger">
