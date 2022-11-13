@@ -1,4 +1,4 @@
-package handlers
+package achievement
 
 import (
 	"github.com/go-openapi/runtime/middleware"
