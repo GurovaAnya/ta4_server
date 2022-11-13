@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="gurova.a" id="125">
+        <createTable tableName="event">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_event_id"/>
+            </column>
+            <column name="sku" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="project_id" type="uuid"/>
+            <column name="is_used" type="boolean"/>
+        </createTable>
+
+        <createTable tableName="trigger">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_trigger_id"/>
+            </column>
+            <column name="sku" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="achievement_id" type="uuid"/>
+            <column name="project_id" type="uuid"/>
+        </createTable>
+
+        <createTable tableName="trigger_event">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_trigger_event_id"/>
+            </column>
+            <column name="event_id" type="uuid"/>
+            <column name="trigger_id" type="uuid"/>
+            <column name="project_id" type="uuid"/>
+            <column name="event_count" type="int"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
+
