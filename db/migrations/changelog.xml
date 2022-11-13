@@ -3,9 +3,10 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        changeLogId="6b3e9146-71cb-407b-bf6c-7d20111b15eb">
 
-    <changeSet author="gurova.a" id="123">
+    <changeSet author="gurova.a" id="1">
         <createTable tableName="project">
             <column name="id" type="uuid">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_project_id"/>
@@ -14,5 +15,105 @@
             <column name="name" type="VARCHAR(255)"/>
             <column name="api_key" type="VARCHAR(255)"/>
         </createTable>
+    </changeSet>
+
+    <changeSet author="gurova.a" id="2">
+        <createTable tableName="achievement">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_achievement_id"/>
+            </column>
+            <column name="sku" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="image" type="VARCHAR(255)"/>
+            <column name="project_id" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="gurova.a" id="3">
+        <createTable tableName="event">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_event_id"/>
+            </column>
+            <column name="sku" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="project_id" type="uuid"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="gurova.a" id="4">
+        <createTable tableName="trigger">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_trigger_id"/>
+            </column>
+            <column name="sku" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="achievement_id" type="uuid"/>
+            <column name="project_id" type="uuid"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="gurova.a" id="5">
+        <createTable tableName="trigger_event">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_trigger_event_id"/>
+            </column>
+            <column name="event_id" type="uuid"/>
+            <column name="trigger_id" type="uuid"/>
+            <column name="project_id" type="uuid"/>
+            <column name="event_count" type="int"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="gurova.a" id="6">
+        <createTable tableName="user">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_user_id"/>
+            </column>
+            <column name="wallet_address" type="VARCHAR(255)"/>
+            <column name="project_id" type="uuid"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="gurova.a" id="7">
+        <createTable tableName="user_achievement">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_user_achievement_id"/>
+            </column>
+            <column name="user_id" type="uuid">
+                <constraints references="user(id)" foreignKeyName="fk_user_achievement__user_id" nullable="false"/>
+            </column>
+            <column name="achievement_id" type="uuid">
+                <constraints references="achievement(id)" foreignKeyName="fk_user_achievement__achievement_id" nullable="false"/>
+            </column>
+            <column name="project_id" type="uuid">
+                <constraints references="project(id)" foreignKeyName="fk_user_achievement__project_id" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="gurova.a" id="8">
+        <createTable tableName="user_event">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_user_event_id"/>
+            </column>
+            <column name="user_id" type="uuid">
+                <constraints references="user(id)" foreignKeyName="fk_user_event__user_id" nullable="false"/>
+            </column>
+            <column name="event_id" type="uuid">
+                <constraints references="event(id)" foreignKeyName="fk_user_event__event_id" nullable="false"/>
+            </column>
+            <column name="project_id" type="uuid">
+                <constraints references="project(id)" foreignKeyName="fk_user_event__project_id" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="gurova.a" id="9">
+        <addForeignKeyConstraint  baseColumnNames="trigger_id"
+                                  baseTableName="trigger_event"
+                                  constraintName="fk_trigger_event__trigger_id"
+                                  referencedColumnNames="id"
+                                  referencedTableName="trigger"
+                                  validate="true"/>
     </changeSet>
 </databaseChangeLog>
