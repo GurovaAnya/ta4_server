@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"ta4/mod/internal/server/models"
 	"ta4/mod/internal/server/restapi/operations/event"
+	"ta4/mod/model"
 	"ta4/mod/repository"
 )
 
@@ -25,7 +26,7 @@ func (h AddEventHandler) Handle(params event.PostEventParams) middleware.Respond
 	var project = h.projectRepository.GetProject(params.HTTPRequest.Header.Get("apiKey"))
 
 	var eventRequest = params.Body
-	var eventForSave = &repository.EventModel{
+	var eventForSave = &model.EventModel{
 		Id:          uuid.New(),
 		Sku:         eventRequest.Sku,
 		Description: eventRequest.Description,

@@ -5,22 +5,12 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
 	"log"
+	"ta4/mod/model"
 )
-
-type EventModel struct {
-	Id          uuid.UUID `gorm:"type:uuid;primary_key"`
-	Sku         string    `gorm:"size:255;column:sku"`
-	Description string    `gorm:"size:255;column:description"`
-	ProjectId   uuid.UUID `gorm:"type:uuid;column:project_id"`
-}
-
-func (EventModel) TableName() string {
-	return "Event"
-}
 
 type EventRepository struct{}
 
-func (repo EventRepository) CreateEvent(event EventModel) EventModel {
+func (repo EventRepository) CreateEvent(event model.EventModel) model.EventModel {
 	db, err := gorm.Open("postgres", "user=postgres dbname=ta4 sslmode=disable password=docker")
 	if err != nil {
 		log.Panic(err)
@@ -29,13 +19,13 @@ func (repo EventRepository) CreateEvent(event EventModel) EventModel {
 	return event
 }
 
-func (repo EventRepository) GetEvent(id uuid.UUID) EventModel {
+func (repo EventRepository) GetEvent(id uuid.UUID) model.EventModel {
 	db, err := gorm.Open("postgres", "user=postgres dbname=ta4 sslmode=disable password=docker")
 	if err != nil {
 		log.Panic(err)
 	}
 
-	var result = EventModel{Id: id}
+	var result = model.EventModel{Id: id}
 	db.Find(&result, result)
 	return result
 }

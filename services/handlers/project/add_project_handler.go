@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"ta4/mod/internal/server/models"
 	"ta4/mod/internal/server/restapi/operations/project"
+	"ta4/mod/model"
 	"ta4/mod/repository"
 )
 
@@ -19,7 +20,7 @@ func AddProjectHandlerImpl() project.AddProjectHandler {
 
 func (h AddProjectHandler) Handle(params project.AddProjectParams) middleware.Responder {
 	var projectRequest = params.Body
-	var projectForSave = &repository.ProjectModel{
+	var projectForSave = &model.ProjectModel{
 		Id:         uuid.New(),
 		WebhookUrl: *projectRequest.WebhookURL,
 		Name:       *projectRequest.Name,

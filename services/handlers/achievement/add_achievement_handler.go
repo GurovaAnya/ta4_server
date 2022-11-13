@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"ta4/mod/internal/server/models"
 	"ta4/mod/internal/server/restapi/operations/achievement"
+	"ta4/mod/model"
 	"ta4/mod/repository"
 )
 
@@ -25,7 +26,7 @@ func (h AddAchievementHandler) Handle(params achievement.PostAchievementParams) 
 	var achievementRequest = params.Body
 	var project = h.projectRepository.GetProject(params.HTTPRequest.Header.Get("apiKey"))
 
-	var achievementForSave = &repository.AchievementModel{
+	var achievementForSave = &model.AchievementModel{
 		Id:          uuid.New(),
 		Sku:         achievementRequest.Sku,
 		Description: achievementRequest.Description,
