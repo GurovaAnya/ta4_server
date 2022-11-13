@@ -8,8 +8,10 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // EventCount event count
@@ -22,11 +24,33 @@ type EventCount struct {
 
 	// event id
 	// Example: f74687fa-2df7-450e-8c31-993695dcebf7
-	EventID string `json:"event_id,omitempty"`
+	// Format: uuid
+	EventID strfmt.UUID `json:"event_id,omitempty"`
 }
 
 // Validate validates this event count
 func (m *EventCount) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateEventID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *EventCount) validateEventID(formats strfmt.Registry) error {
+	if swag.IsZero(m.EventID) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("event_id", "body", "uuid", m.EventID.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 

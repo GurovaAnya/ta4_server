@@ -8,8 +8,10 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // WebhookEvent webhook event
@@ -19,15 +21,54 @@ type WebhookEvent struct {
 
 	// event id
 	// Example: 5e6890cc-c3a1-4c26-b269-b55e715c09b8
-	EventID string `json:"event_id,omitempty"`
+	// Format: uuid
+	EventID strfmt.UUID `json:"event_id,omitempty"`
 
 	// player id
 	// Example: 5e6890cc-c3a1-4c26-b269-b55e715c09b8
-	PlayerID string `json:"player_id,omitempty"`
+	// Format: uuid
+	PlayerID strfmt.UUID `json:"player_id,omitempty"`
 }
 
 // Validate validates this webhook event
 func (m *WebhookEvent) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateEventID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validatePlayerID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *WebhookEvent) validateEventID(formats strfmt.Registry) error {
+	if swag.IsZero(m.EventID) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("event_id", "body", "uuid", m.EventID.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *WebhookEvent) validatePlayerID(formats strfmt.Registry) error {
+	if swag.IsZero(m.PlayerID) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("player_id", "body", "uuid", m.PlayerID.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 

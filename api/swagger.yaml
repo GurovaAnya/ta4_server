@@ -75,6 +75,59 @@ paths:
           schema:
             $ref: '#/definitions/Achievement'
 
+  /trigger:
+    post:
+      tags:
+        - "trigger"
+      summary: "Save new achievement"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Trigger"
+          required: true
+          schema:
+            $ref: '#/definitions/TriggerRequest'
+      responses:
+        201:
+          description: "Trigger created"
+          schema:
+            $ref: '#/definitions/Trigger'
+
+  /event:
+    post:
+      tags:
+        - "event"
+      summary: "Save new event"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Event"
+          required: true
+          schema:
+            $ref: '#/definitions/EventRequest'
+      responses:
+        201:
+          description: "Event created"
+          schema:
+            $ref: '#/definitions/Event'
+
+  /player:
+    post:
+      tags:
+        - "player"
+      summary: "Save new player"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Player"
+          required: true
+          schema:
+            $ref: '#/definitions/PlayerRequest'
+      responses:
+        201:
+          description: "Player created"
+          schema:
+            $ref: '#/definitions/Player'
 
 securityDefinitions:
   api_key:
@@ -155,6 +208,7 @@ definitions:
     properties:
       id:
         type: "string"
+        format: "uuid"
         example: "f74687fa-2df7-450e-8c31-993695dcebf7"
       sku:
         type: "string"
@@ -162,11 +216,23 @@ definitions:
       description:
         type: "string"
         example: "occurrs if a player killed an enemy"
+
+  EventRequest:
+    type: "object"
+    properties:
+      sku:
+        type: "string"
+        example: "enemy_kill"
+      description:
+        type: "string"
+        example: "occurrs if a player killed an enemy"
+
   EventCount:
     type: "object"
     properties:
       event_id:
         type: "string"
+        format: "uuid"
         example: "f74687fa-2df7-450e-8c31-993695dcebf7"
       count:
         type: "integer"
@@ -177,23 +243,49 @@ definitions:
     properties:
       id:
         type: "string"
+        format: "uuid"
         example: "5e6890cc-c3a1-4c26-b269-b55e715c09b8"
       sku:
         type: "string"
         example: "enemy_kill"
       achievement_id:
         type: "string"
+        format: "uuid"
         example: "3a24bc5c-4c9d-11ed-bdc3-0242ac120002"
       events:
         type: "array"
         items:
           $ref: '#/definitions/EventCount'
+
+  TriggerRequest:
+    type: "object"
+    properties:
+      sku:
+        type: "string"
+        example: "enemy_kill"
+      achievement_id:
+        format: "uuid"
+        type: "string"
+        example: "3a24bc5c-4c9d-11ed-bdc3-0242ac120002"
+      events:
+        type: "array"
+        items:
+          $ref: '#/definitions/EventCount'
+
   Player:
     type: "object"
     properties:
       id:
         type: "string"
+        format: "uuid"
         example: "5e6890cc-c3a1-4c26-b269-b55e715c09b8"
+      wallet_address:
+        type: "string"
+        example: "ba4TrH8sNRzQfFhJH8mR"
+
+  PlayerRequest:
+    type: "object"
+    properties:
       wallet_address:
         type: "string"
         example: "ba4TrH8sNRzQfFhJH8mR"
@@ -203,9 +295,11 @@ definitions:
     properties:
       event_id:
         type: "string"
+        format: "uuid"
         example: "5e6890cc-c3a1-4c26-b269-b55e715c09b8"
       player_id:
         type: "string"
+        format: "uuid"
         example: "5e6890cc-c3a1-4c26-b269-b55e715c09b8"
 
   WebhookTrigger:
@@ -213,7 +307,9 @@ definitions:
     properties:
       event_id:
         type: "string"
+        format: "uuid"
         example: "5e6890cc-c3a1-4c26-b269-b55e715c09b8"
       player_id:
         type: "string"
+        format: "uuid"
         example: "5e6890cc-c3a1-4c26-b269-b55e715c09b8"

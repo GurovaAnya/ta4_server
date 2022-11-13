@@ -15,10 +15,10 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// Trigger trigger
+// TriggerRequest trigger request
 //
-// swagger:model Trigger
-type Trigger struct {
+// swagger:model TriggerRequest
+type TriggerRequest struct {
 
 	// achievement id
 	// Example: 3a24bc5c-4c9d-11ed-bdc3-0242ac120002
@@ -28,18 +28,13 @@ type Trigger struct {
 	// events
 	Events []*EventCount `json:"events"`
 
-	// id
-	// Example: 5e6890cc-c3a1-4c26-b269-b55e715c09b8
-	// Format: uuid
-	ID strfmt.UUID `json:"id,omitempty"`
-
 	// sku
 	// Example: enemy_kill
 	Sku string `json:"sku,omitempty"`
 }
 
-// Validate validates this trigger
-func (m *Trigger) Validate(formats strfmt.Registry) error {
+// Validate validates this trigger request
+func (m *TriggerRequest) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateAchievementID(formats); err != nil {
@@ -50,17 +45,13 @@ func (m *Trigger) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateID(formats); err != nil {
-		res = append(res, err)
-	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
 	return nil
 }
 
-func (m *Trigger) validateAchievementID(formats strfmt.Registry) error {
+func (m *TriggerRequest) validateAchievementID(formats strfmt.Registry) error {
 	if swag.IsZero(m.AchievementID) { // not required
 		return nil
 	}
@@ -72,7 +63,7 @@ func (m *Trigger) validateAchievementID(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Trigger) validateEvents(formats strfmt.Registry) error {
+func (m *TriggerRequest) validateEvents(formats strfmt.Registry) error {
 	if swag.IsZero(m.Events) { // not required
 		return nil
 	}
@@ -98,20 +89,8 @@ func (m *Trigger) validateEvents(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Trigger) validateID(formats strfmt.Registry) error {
-	if swag.IsZero(m.ID) { // not required
-		return nil
-	}
-
-	if err := validate.FormatOf("id", "body", "uuid", m.ID.String(), formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-// ContextValidate validate this trigger based on the context it is used
-func (m *Trigger) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validate this trigger request based on the context it is used
+func (m *TriggerRequest) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.contextValidateEvents(ctx, formats); err != nil {
@@ -124,7 +103,7 @@ func (m *Trigger) ContextValidate(ctx context.Context, formats strfmt.Registry) 
 	return nil
 }
 
-func (m *Trigger) contextValidateEvents(ctx context.Context, formats strfmt.Registry) error {
+func (m *TriggerRequest) contextValidateEvents(ctx context.Context, formats strfmt.Registry) error {
 
 	for i := 0; i < len(m.Events); i++ {
 
@@ -145,7 +124,7 @@ func (m *Trigger) contextValidateEvents(ctx context.Context, formats strfmt.Regi
 }
 
 // MarshalBinary interface implementation
-func (m *Trigger) MarshalBinary() ([]byte, error) {
+func (m *TriggerRequest) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -153,8 +132,8 @@ func (m *Trigger) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *Trigger) UnmarshalBinary(b []byte) error {
-	var res Trigger
+func (m *TriggerRequest) UnmarshalBinary(b []byte) error {
+	var res TriggerRequest
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
