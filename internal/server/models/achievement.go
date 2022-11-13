@@ -19,19 +19,22 @@ import (
 // swagger:model Achievement
 type Achievement struct {
 
+	// description
+	// Example: GTA 5
+	Description string `json:"description,omitempty"`
+
 	// id
 	// Example: f74687fa-2df7-450e-8c31-993695dcebf7
 	// Format: uuid
 	ID strfmt.UUID `json:"id,omitempty"`
 
-	// name
-	// Example: GTA 5
-	// Required: true
-	Name *string `json:"name"`
-
-	// webhook url
+	// image
 	// Example: example.com
-	WebhookURL string `json:"webhook_url,omitempty"`
+	Image string `json:"image,omitempty"`
+
+	// sku
+	// Example: X-DKK-KDM
+	Sku string `json:"sku,omitempty"`
 }
 
 // Validate validates this achievement
@@ -39,10 +42,6 @@ func (m *Achievement) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateID(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateName(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -58,15 +57,6 @@ func (m *Achievement) validateID(formats strfmt.Registry) error {
 	}
 
 	if err := validate.FormatOf("id", "body", "uuid", m.ID.String(), formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *Achievement) validateName(formats strfmt.Registry) error {
-
-	if err := validate.Required("name", "body", m.Name); err != nil {
 		return err
 	}
 

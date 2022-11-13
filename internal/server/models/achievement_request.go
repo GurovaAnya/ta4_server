@@ -8,10 +8,8 @@ package models
 import (
 	"context"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // AchievementRequest achievement request
@@ -19,36 +17,21 @@ import (
 // swagger:model AchievementRequest
 type AchievementRequest struct {
 
-	// name
+	// description
 	// Example: GTA 5
-	// Required: true
-	Name *string `json:"name"`
+	Description string `json:"description,omitempty"`
 
-	// webhook url
+	// image
 	// Example: example.com
-	WebhookURL string `json:"webhook_url,omitempty"`
+	Image string `json:"image,omitempty"`
+
+	// sku
+	// Example: X-DKK-KDM
+	Sku string `json:"sku,omitempty"`
 }
 
 // Validate validates this achievement request
 func (m *AchievementRequest) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateName(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *AchievementRequest) validateName(formats strfmt.Registry) error {
-
-	if err := validate.Required("name", "body", m.Name); err != nil {
-		return err
-	}
-
 	return nil
 }
 

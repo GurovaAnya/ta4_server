@@ -9,7 +9,6 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"net/http"
 	"ta4/mod/internal/server/restapi/operations"
-	"ta4/mod/internal/server/restapi/operations/achievement"
 	"ta4/mod/internal/server/restapi/operations/project"
 	"ta4/mod/services/handlers"
 )
@@ -36,6 +35,7 @@ func configureAPI(api *operations.SwaggerT4AAPI) http.Handler {
 
 	api.ProjectAddProjectHandler = handlers.AddProjectHandlerImpl()
 	api.ProjectGetProjectHandler = handlers.GetProjectHandlerImpl()
+	api.AchievementPostAchievementHandler = handlers.AddAchievementHandlerImpl()
 
 	api.JSONConsumer = runtime.JSONConsumer()
 
@@ -54,11 +54,6 @@ func configureAPI(api *operations.SwaggerT4AAPI) http.Handler {
 	// Example:
 	// api.APIAuthorizer = security.Authorized()
 
-	if api.AchievementPostAchievementHandler == nil {
-		api.AchievementPostAchievementHandler = achievement.PostAchievementHandlerFunc(func(params achievement.PostAchievementParams) middleware.Responder {
-			return middleware.NotImplemented("operation achievement.PostAchievement has not yet been implemented")
-		})
-	}
 	if api.ProjectAddProjectHandler == nil {
 		api.ProjectAddProjectHandler = project.AddProjectHandlerFunc(func(params project.AddProjectParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation project.AddProject has not yet been implemented")

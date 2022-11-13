@@ -123,29 +123,31 @@ definitions:
         example: "abcdef123"
   Achievement:
     type: "object"
-    required:
-      - "name"
     properties:
       id:
         type: "string"
         format: "uuid"
         example: "f74687fa-2df7-450e-8c31-993695dcebf7"
-      name:
+      sku:
+        type: "string"
+        example: "X-DKK-KDM"
+      description:
         type: "string"
         example: "GTA 5"
-      webhook_url:
+      image:
         type: "string"
         example: "example.com"
 
   AchievementRequest:
     type: "object"
-    required:
-      - "name"
     properties:
-      name:
+      sku:
+        type: "string"
+        example: "X-DKK-KDM"
+      description:
         type: "string"
         example: "GTA 5"
-      webhook_url:
+      image:
         type: "string"
         example: "example.com"
   Event:
