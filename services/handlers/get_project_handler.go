@@ -9,11 +9,11 @@ import (
 )
 
 type GetProjectHandler struct {
-	repo repository.PostgresRepository
+	repo repository.ProjectRepository
 }
 
 func GetProjectHandlerImpl() project.GetProjectHandler {
-	return GetProjectHandler{repo: repository.PostgresRepository{}}
+	return GetProjectHandler{repo: repository.ProjectRepository{}}
 }
 
 func (h GetProjectHandler) Handle(params project.GetProjectParams) middleware.Responder {
