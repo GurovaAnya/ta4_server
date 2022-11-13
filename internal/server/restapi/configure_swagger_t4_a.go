@@ -10,7 +10,9 @@ import (
 	"net/http"
 	"ta4/mod/internal/server/restapi/operations"
 	"ta4/mod/internal/server/restapi/operations/project"
-	"ta4/mod/services/handlers"
+	"ta4/mod/services/handlers/achievement"
+	"ta4/mod/services/handlers/event"
+	projectImpl "ta4/mod/services/handlers/project"
 )
 
 //go:generate swagger generate server --target ../../server --name SwaggerT4A --spec ../../../api/swagger.yaml --principal interface{} --exclude-main
@@ -33,9 +35,10 @@ func configureAPI(api *operations.SwaggerT4AAPI) http.Handler {
 	// To continue using redoc as your UI, uncomment the following line
 	// api.UseRedoc()
 
-	api.ProjectAddProjectHandler = handlers.AddProjectHandlerImpl()
-	api.ProjectGetProjectHandler = handlers.GetProjectHandlerImpl()
-	api.AchievementPostAchievementHandler = handlers.AddAchievementHandlerImpl()
+	api.ProjectAddProjectHandler = projectImpl.AddProjectHandlerImpl()
+	api.ProjectGetProjectHandler = projectImpl.GetProjectHandlerImpl()
+	api.AchievementPostAchievementHandler = achievement.AddAchievementHandlerImpl()
+	api.EventPostEventHandler = event.AddEventHandlerImpl()
 
 	api.JSONConsumer = runtime.JSONConsumer()
 
