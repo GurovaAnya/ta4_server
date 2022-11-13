@@ -14,10 +14,10 @@ type ProjectRepository interface {
 }
 
 type ProjectModel struct {
-	Id         uuid.UUID `gorm:"type:uuid;primary_key";"AUTO_INCREMENT"`
-	WebhookUrl string    `gorm:"size:255"`
-	Name       string    `gorm:"size:255"`
-	ApiKey     string    `gorm:"size:255"`
+	Id         uuid.UUID `gorm:"type:uuid;primary_key"`
+	WebhookUrl string    `gorm:"size:255;column:webhook_url"`
+	Name       string    `gorm:"size:255;column:name"`
+	ApiKey     string    `gorm:"size:255:column:api_key"`
 }
 
 func (ProjectModel) TableName() string {
@@ -26,17 +26,22 @@ func (ProjectModel) TableName() string {
 
 type PostgresRepository struct{}
 
-func (repo PostgresRepository) GetProject(id uuid.UUID) ProjectModel {
+func (repo PostgresRepository) GetProject(apiKey string) ProjectModel {
 	db, err := gorm.Open("postgres", "user=postgres dbname=ta4 sslmode=disable password=docker")
 	if err != nil {
 		log.Panic(err)
 	}
 
-	var result ProjectModel
-	db.Model(ProjectModel{Id: id}).Find(&result)
+	var result = ProjectModel{ApiKey: apiKey}
+	db.Find(&result, result)
 	return result
 }
 
-func (repo PostgresRepository) CreateProject(project ProjectModel) {
-
+func (repo PostgresRepository) CreateProject(project ProjectModel) ProjectModel {
+	db, err := gorm.Open("postgres", "user=postgres dbname=ta4 sslmode=disable password=docker")
+	if err != nil {
+		log.Panic(err)
+	}
+	db.Create(&project)
+	return project
 }

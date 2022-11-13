@@ -7,6 +7,7 @@ package models
 
 import (
 	"context"
+	"github.com/google/uuid"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -20,7 +21,7 @@ import (
 type Project struct {
 
 	// id
-	ID string `json:"id,omitempty"`
+	ID uuid.UUID `json:"id,omitempty"`
 
 	// name
 	// Example: GTA 5

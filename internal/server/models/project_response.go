@@ -7,6 +7,7 @@ package models
 
 import (
 	"context"
+	"github.com/google/uuid"
 
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
@@ -22,7 +23,7 @@ type ProjectResponse struct {
 	APIKey string `json:"api_key,omitempty"`
 
 	// id
-	ID string `json:"id,omitempty"`
+	ID uuid.UUID `json:"id,omitempty"`
 }
 
 // Validate validates this project response
