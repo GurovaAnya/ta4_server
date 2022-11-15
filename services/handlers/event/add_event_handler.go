@@ -4,6 +4,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
+	"ta4/mod/internal/app"
 	"ta4/mod/internal/server/models"
 	"ta4/mod/internal/server/restapi/operations/event"
 	"ta4/mod/model"
@@ -15,10 +16,10 @@ type AddEventHandler struct {
 	projectRepository repository.ProjectRepository
 }
 
-func AddEventHandlerImpl() event.PostEventHandler {
+func AddEventHandlerImpl(a *app.Application) event.PostEventHandler {
 	return AddEventHandler{
-		eventRepository:   repository.EventRepository{},
-		projectRepository: repository.ProjectRepository{},
+		eventRepository:   repository.NewEventRepository(a.Store),
+		projectRepository: repository.NewProjectRepository(a.Store),
 	}
 }
 

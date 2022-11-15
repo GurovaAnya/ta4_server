@@ -4,6 +4,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
+	"ta4/mod/internal/app"
 	"ta4/mod/internal/server/models"
 	"ta4/mod/internal/server/restapi/operations/trigger"
 	"ta4/mod/model"
@@ -15,10 +16,10 @@ type AddTriggerHandler struct {
 	projectRepository repository.ProjectRepository
 }
 
-func AddTriggerHandlerImpl() trigger.PostTriggerHandler {
+func AddTriggerHandlerImpl(a *app.Application) trigger.PostTriggerHandler {
 	return AddTriggerHandler{
-		triggerRepository: repository.TriggerRepository{},
-		projectRepository: repository.ProjectRepository{},
+		triggerRepository: repository.NewTriggerRepository(a.Store),
+		projectRepository: repository.NewProjectRepository(a.Store),
 	}
 }
 

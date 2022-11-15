@@ -4,6 +4,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
+	"ta4/mod/internal/app"
 	"ta4/mod/internal/server/models"
 	"ta4/mod/internal/server/restapi/operations/achievement"
 	"ta4/mod/model"
@@ -15,10 +16,10 @@ type AddAchievementHandler struct {
 	projectRepository     repository.ProjectRepository
 }
 
-func AddAchievementHandlerImpl() achievement.PostAchievementHandler {
+func AddAchievementHandlerImpl(a *app.Application) achievement.PostAchievementHandler {
 	return AddAchievementHandler{
-		achievementRepository: repository.AchievementRepository{},
-		projectRepository:     repository.ProjectRepository{},
+		achievementRepository: repository.NewAchievementRepository(a.Store),
+		projectRepository:     repository.NewProjectRepository(a.Store),
 	}
 }
 
