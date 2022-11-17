@@ -116,4 +116,11 @@
                                   referencedTableName="trigger"
                                   validate="true"/>
     </changeSet>
+
+    <changeSet author="gurova.a" id="10">
+        <addColumn tableName="user_event" >
+            <column name="is_redeemed"
+                    type="bool"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
